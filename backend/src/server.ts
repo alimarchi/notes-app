@@ -1,12 +1,17 @@
-import express from "express";
+import app from "./app";
+// envalid is a library for validating and accessing env variables
+// if one of the variables is missing the app will crash
+import env from "./util/validateEnv";
+import mongoose from "mongoose";
 
-const app = express();
-const port = 5000;
+const port = env.PORT;
 
-app.get("/", (req, res) => {
-  res.send("Hello, World!");
-});
-
-app.listen(port, () => {
-    console.log("Server running on port: " + port)
-})
+mongoose
+  .connect(env.MONGO_CONNECTION_STRING)
+  .then(() => {
+    console.log("Mongoose connected");
+    app.listen(port, () => {
+      console.log("Server running on port: " + port);
+    });
+  })
+  .catch(console.error);
