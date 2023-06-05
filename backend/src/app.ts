@@ -3,8 +3,12 @@ import express, { Request, Response, NextFunction } from "express";
 import notesRoutes from "./routes/notes";
 import morgan from "morgan";
 import createHttpError, { isHttpError } from "http-errors";
+import cors from "cors";
 
 const app = express();
+
+// configure cors
+app.use(cors());
 
 // morgan library, HTTP request logger middleware for node.js
 app.use(morgan("dev"));
