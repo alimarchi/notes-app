@@ -6,21 +6,36 @@ import { Note } from "../models/notes";
 import { NoteInput } from "../network/notes_api";
 import * as NotesApi from "../network/notes_api";
 
-interface AddNoteDialogProps {
-  onDismiss: () => void,
-  onNoteSaved: (note: Note) => void,
+interface AddEditNoteDialogProps {
+  noteToEdit?: Note;
+  onDismiss: () => void;
+  onNoteSaved: (note: Note) => void;
 }
 
-const AddNoteDialog = ({ onDismiss, onNoteSaved }: AddNoteDialogProps) => {
+const AddEditNoteDialog = ({
+  noteToEdit,
+  onDismiss,
+  onNoteSaved,
+}: AddEditNoteDialogProps) => {
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<NoteInput>();
+  } = useForm<NoteInput>({
+    defaultValues: {
+      title: noteToEdit?.title || "",
+      text: noteToEdit?.text || "",
+    },
+  });
 
   const onSubmit = async (input: NoteInput) => {
     try {
-      const noteResponse = await NotesApi.createNote(input);
+      let noteResponse: Note;
+      if (noteToEdit) {
+        noteResponse = await NotesApi.updateNote(noteToEdit._id, input);
+      } else {
+        noteResponse = await NotesApi.createNote(input);
+      }
       onNoteSaved(noteResponse);
     } catch (error) {
       console.error(error);
@@ -32,7 +47,7 @@ const AddNoteDialog = ({ onDismiss, onNoteSaved }: AddNoteDialogProps) => {
     <div className={styles.modal}>
       <div className={styles["modal-dialog"]}>
         <div className={styles["modal-header"]}>
-          <h2>Add Note</h2>
+          <h2>{noteToEdit? "Edit Note" : "Add Note"}</h2>
           <FontAwesomeIcon
             icon={faXmark}
             onClick={onDismiss}
@@ -41,9 +56,17 @@ const AddNoteDialog = ({ onDismiss, onNoteSaved }: AddNoteDialogProps) => {
           />
         </div>
         <div className={styles["modal-body"]}>
-          <form id="addNoteForm" className={styles["add-note-form"]} onSubmit={handleSubmit(onSubmit)}>
+          <form
+            id="addEditNoteForm"
+            className={styles["add-note-form"]}
+            onSubmit={handleSubmit(onSubmit)}
+          >
             <label htmlFor="title">Title</label>
-            <input type="text" placeholder="Title" {...register("title", { required: "Required"})} />
+            <input
+              type="text"
+              placeholder="Title"
+              {...register("title", { required: "Required" })}
+            />
             <label>Text</label>
             <textarea placeholder="Text" {...register("text")}></textarea>
           </form>
@@ -51,7 +74,7 @@ const AddNoteDialog = ({ onDismiss, onNoteSaved }: AddNoteDialogProps) => {
         <div className={styles["modal-footer"]}>
           <button
             type="submit"
-            form="addNoteForm"
+            form="addEditNoteForm"
             className={styles["add-note-button"]}
             disabled={isSubmitting}
           >
@@ -63,4 +86,4 @@ const AddNoteDialog = ({ onDismiss, onNoteSaved }: AddNoteDialogProps) => {
   );
 };
 
-export default AddNoteDialog;
+export default AddEditNoteDialog;

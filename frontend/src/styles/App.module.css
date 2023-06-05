@@ -18,3 +18,11 @@
   margin-left: auto;
   margin-right: auto;
 }
+
+.warn-message {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  color: var(--grey);
+  font-size: 1.3rem;
+}

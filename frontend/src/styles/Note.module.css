@@ -10,9 +10,25 @@
   position: relative;
 }
 
+.note-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .note-card h2 {
   font-family: "Montserrat", sans-serif;
-  font-size: 1.9rem;
+  font-size: 1.6rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+
+.trash-can {
+  color: var(--grey);
+  cursor: pointer;
 }
 
 .note-card p {
