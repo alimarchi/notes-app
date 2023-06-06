@@ -1,0 +1,13 @@
+.app-logo {
+  font-family: "Rock Salt", cursive;
+  font-size: 2rem;
+}
+
+.navbar {
+    padding: 1em 0;
+    border-bottom: 1px solid var(--grey);
+    margin-bottom: 2.5em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

@@ -62,22 +62,40 @@
   font-size: 1.2rem;
 }
 
+.add-note-form input:focus,
+.add-note-form textarea:focus {
+  border: 1px solid var(--blue);
+}
+
 .add-note-form textarea {
-    height: 180px;
+  height: 180px;
 }
 
 .modal-footer {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 }
 
 .add-note-button {
-    background-color: var(--blue);
-    color: white;
-    padding: .8em 1.8em;
-    font-family: "Montserrat", sans-serif;
-    font-weight: 600;
-    border-radius: .3rem;
-    cursor: pointer;
+  background-color: var(--blue);
+  color: white;
+  padding: 0.8em 1.8em;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
+  border-radius: 0.3rem;
+  cursor: pointer;
+}
+
+.signup-button {
+  background-color: var(--blue);
+  color: white;
+  padding-top: 0.7em;
+  padding-bottom: 0.7em;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
+  font-size: 1.2rem;
+  border-radius: 0.3rem;
+  cursor: pointer;
+  width: 100%;
 }
