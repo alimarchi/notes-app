@@ -1,5 +1,6 @@
 import { User } from "../models/user";
 import * as NotesApi from "../network/notes_api";
+import styles from "../styles/Navbar.module.css";
 
 interface NavbarLoggedInViewProps {
   user: User;
@@ -21,10 +22,10 @@ const NavbarLoggedInView = ({
   };
 
   return (
-    <>
-      <h3>Signed in as: {user.username}</h3>
-      <button onClick={logout}>Log out</button>
-    </>
+    <div className={styles["logged-items"]}>
+      <h3 className={styles["signed-in"]}>Hello, {user.username}!</h3>
+      <button onClick={logout} className={styles["logout-button"]}>Log Out</button>
+    </div>
   );
 };
 
