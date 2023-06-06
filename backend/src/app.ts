@@ -1,9 +1,13 @@
 import "dotenv/config";
 import express, { Request, Response, NextFunction } from "express";
 import notesRoutes from "./routes/notes";
+import userRoutes from "./routes/user";
 import morgan from "morgan";
 import createHttpError, { isHttpError } from "http-errors";
 import cors from "cors";
+import session from "express-session";
+import env from "./util/validateEnv";
+import MongoStore from "connect-mongo";
 
 const app = express();
 
@@ -15,6 +19,23 @@ app.use(morgan("dev"));
 
 app.use(express.json());
 
+// configure session
+app.use(
+  session({
+    secret: env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      maxAge: 60 * 60 * 1000, // set when the session is going to expire
+    },
+    rolling: true,
+    store: MongoStore.create({
+      mongoUrl: env.MONGO_CONNECTION_STRING, // where we store the session
+    }),
+  })
+);
+
+app.use("/api/user", userRoutes);
 app.use("/api/notes", notesRoutes);
 
 app.use((req, res, next) => {
