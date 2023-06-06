@@ -6,13 +6,7 @@ import bcrypt from "bcrypt";
 // this endpoint will return the user who is logged
 export const getAuthenticatedUser: RequestHandler = async (req, res, next) => {
   try {
-    const authenticatedUser = req.session.userId;
-
-    if (!authenticatedUser) {
-      throw createHttpError(401, "User not authenticated.");
-    }
-
-    const user = await UserModel.findById(authenticatedUser)
+    const user = await UserModel.findById(req.session.userId)
       .select("+email")
       .exec();
 
