@@ -5,6 +5,8 @@ import { LoginCredentials } from "../network/notes_api";
 import * as NotesApi from "../network/notes_api";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import { useState } from "react";
+import { UnauthorizedError } from "../errors/httpErrors";
 
 interface LoginModalProps {
   onDismiss: () => void;
@@ -12,18 +14,28 @@ interface LoginModalProps {
 }
 
 const LoginModal = ({ onDismiss, onLoginSuccessful }: LoginModalProps) => {
+  const [errorText, setErrorText] = useState<string | null>(null);
+
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<LoginCredentials>();
 
+  const isBlank = (value: string) => {
+    return value.trim() === ""; // Check if the value contains only blank spaces
+  };
+
   const onSubmit = async (credentials: LoginCredentials) => {
     try {
       const user = await NotesApi.login(credentials);
       onLoginSuccessful(user);
     } catch (error) {
-      alert(error);
+      if (error instanceof UnauthorizedError) {
+        setErrorText(error.message);
+      } else {
+        alert(error);
+      }
       console.error(error);
     }
   };
@@ -41,6 +53,7 @@ const LoginModal = ({ onDismiss, onLoginSuccessful }: LoginModalProps) => {
           />
         </div>
         <div className={styles["modal-body"]}>
+          {errorText && <p className={styles["error-alert"]}>{errorText}</p>}
           <form
             id="loginForm"
             className={styles["add-note-form"]}
@@ -50,14 +63,30 @@ const LoginModal = ({ onDismiss, onLoginSuccessful }: LoginModalProps) => {
             <input
               type="text"
               placeholder="Username"
-              {...register("username", { required: "Required" })}
+              {...register("username", {
+                required: "Username is required",
+                validate: (value) =>
+                  !isBlank(value) || "Username cannot be blank spaces",
+              })}
             />
+            {errors.username && (
+              <p className={styles["error-message"]}>
+                {errors.username.message}
+              </p>
+            )}
             <label htmlFor="password">Password</label>
             <input
               type="password"
               placeholder="Password"
-              {...register("password", { required: "Required" })}
+              {...register("password", {
+                required: "Password is required",
+              })}
             />
+            {errors.password && (
+              <p className={styles["error-message"]}>
+                {errors.password.message}
+              </p>
+            )}
           </form>
         </div>
         <div className={styles["modal-footer"]}>

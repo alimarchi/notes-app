@@ -99,3 +99,20 @@
   cursor: pointer;
   width: 100%;
 }
+
+.error-alert {
+  padding: 0.5em 0.5em;
+  width: 100%;
+  background-color: rgb(244, 211, 211);
+  border: 1px solid rgb(168, 35, 35);
+  color: rgb(168, 35, 35);
+  border-radius: 0.3rem;
+  margin-top: 1em;
+  font-size: 1.1rem;
+}
+
+.error-message {
+  color: rgb(168, 35, 35);
+  margin-top: .3em;
+  padding-left: .3em;
+}

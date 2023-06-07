@@ -1,3 +1,4 @@
+import { useState } from "react";
 import styles from "../styles/modals.module.css";
 import { User } from "../models/user";
 import { useForm } from "react-hook-form";
@@ -5,6 +6,7 @@ import { SignUpCredentials } from "../network/notes_api";
 import * as NotesApi from "../network/notes_api";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import { ConflictError } from "../errors/httpErrors";
 
 interface SignUpModalProps {
   onDismiss: () => void; // function to dismiss the modal
@@ -12,6 +14,8 @@ interface SignUpModalProps {
 }
 
 const SignUpModal = ({ onDismiss, onSignUpSuccessful }: SignUpModalProps) => {
+  const [errorText, setErrorText] = useState<string | null>(null);
+
   const {
     register,
     handleSubmit,
@@ -23,7 +27,11 @@ const SignUpModal = ({ onDismiss, onSignUpSuccessful }: SignUpModalProps) => {
       const newUser = await NotesApi.signUp(credentials); // Call the signUp API with the provided credentials
       onSignUpSuccessful(newUser); // Call the onSignUpSuccessful function with the newly created user
     } catch (error) {
-      alert(error);
+      if (error instanceof ConflictError) {
+        setErrorText(error.message);
+      } else {
+        alert(error);
+      }
       console.error(error);
     }
   };
@@ -41,6 +49,7 @@ const SignUpModal = ({ onDismiss, onSignUpSuccessful }: SignUpModalProps) => {
           />
         </div>
         <div className={styles["modal-body"]}>
+          {errorText && <p className={styles["error-alert"]}>{errorText}</p>}
           <form
             id="signupForm"
             className={styles["add-note-form"]}
