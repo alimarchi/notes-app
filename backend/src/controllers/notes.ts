@@ -5,15 +5,15 @@ import createHttpError from "http-errors";
 import { assertIsDefined } from "../util/assertIsDefined";
 
 export const getNotes: RequestHandler = async (req, res, next) => {
-  const authenticatedUserId = req.session.userId;
+  const authenticatedUserId = req.session.userId; // Retrieves the authenticated user ID from the session
 
   try {
-    assertIsDefined(authenticatedUserId);
+    assertIsDefined(authenticatedUserId); // Asserts that the authenticated user ID is defined
 
     const notes = await NoteModel.find({ userId: authenticatedUserId }).exec();
     res.status(200).json(notes);
   } catch (error) {
-    next(error);
+    next(error); // Passes the error to the next error-handling middleware
   }
 };
 

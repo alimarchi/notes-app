@@ -6,24 +6,24 @@ import { Note as NoteModel } from "../models/notes";
 import * as NotesApi from "../network/notes_api";
 import AddEditNoteDialog from "./AddNoteDialog";
 import Loader from "./Loader";
-import styles from "../styles/App.module.css";
+import styles from "../styles/NotesPagedLoggedIn.module.css";
 
 const NotesPageLoggedInView = () => {
   const [notes, setNotes] = useState<NoteModel[]>([]);
 
-  const [notesLoading, setNotesLoading] = useState(true);
-  const [showNotesLoadingError, setshowNotesLoadingError] = useState(false);
+  const [notesLoading, setNotesLoading] = useState(true); // loading state of notes
+  const [showNotesLoadingError, setshowNotesLoadingError] = useState(false); 
 
-  const [showAddNoteDialog, setshowAddNoteDialog] = useState(false);
+  const [showAddNoteDialog, setshowAddNoteDialog] = useState(false); // visibility of the add note dialog
 
-  const [noteToEdit, setNoteToEdit] = useState<NoteModel | null>(null);
+  const [noteToEdit, setNoteToEdit] = useState<NoteModel | null>(null); 
 
   useEffect(() => {
     const loadNotes = async () => {
       try {
         setshowNotesLoadingError(false);
         setNotesLoading(true);
-        const notes = await NotesApi.fetchNotes();
+        const notes = await NotesApi.fetchNotes(); // fetch the notes
         setNotes(notes);
       } catch (error) {
         console.log(error);

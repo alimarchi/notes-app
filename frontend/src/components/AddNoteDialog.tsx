@@ -1,4 +1,4 @@
-import styles from "../styles/AddNoteDialog.module.css";
+import styles from "../styles/modals.module.css";
 import { useForm } from "react-hook-form";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";

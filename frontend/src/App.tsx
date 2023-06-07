@@ -7,19 +7,23 @@ import * as NotesApi from "./network/notes_api";
 import NotesPageLoggedInView from "./components/NotesPageLoggedInView";
 import NotesPageLoggedOutView from "./components/NotesPageLoggedOutView";
 
-function App() {
+// App component manages the logged-in user state and renders different views based on the user's authentication status.
+const App = () => {
   const [loggedInUser, setLoggedInUser] = useState<User | null>(null);
 
+  // controls the visibility of signup and login modals
   const [showSignUpModal, setShowSignupModal] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
 
+  // fetch the logged-in user when the component mounts.
   useEffect(() => {
     const fetchLoggedInUser = async () => {
       try {
         const user = await NotesApi.getLoggedInUser();
         setLoggedInUser(user);
       } catch (error) {
-        console.error(error);
+        //console.error(error);
+        setLoggedInUser(null);
       }
     };
     fetchLoggedInUser();
@@ -56,6 +60,6 @@ function App() {
       )}
     </div>
   );
-}
+};
 
 export default App;

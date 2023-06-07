@@ -1,3 +1,5 @@
+// uses the envalid library to validate and retrieve environment variables
+
 import { cleanEnv } from "envalid";
 import { port, str } from "envalid/dist/validators";
 

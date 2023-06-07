@@ -1,4 +1,4 @@
-import styles from "../styles/AddNoteDialog.module.css";
+import styles from "../styles/modals.module.css";
 import { User } from "../models/user";
 import { useForm } from "react-hook-form";
 import { SignUpCredentials } from "../network/notes_api";
@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
 interface SignUpModalProps {
-  onDismiss: () => void;
+  onDismiss: () => void; // function to dismiss the modal
   onSignUpSuccessful: (user: User) => void;
 }
 
@@ -20,8 +20,8 @@ const SignUpModal = ({ onDismiss, onSignUpSuccessful }: SignUpModalProps) => {
 
   const onSubmit = async (credentials: SignUpCredentials) => {
     try {
-      const newUser = await NotesApi.signUp(credentials);
-      onSignUpSuccessful(newUser);
+      const newUser = await NotesApi.signUp(credentials); // Call the signUp API with the provided credentials
+      onSignUpSuccessful(newUser); // Call the onSignUpSuccessful function with the newly created user
     } catch (error) {
       alert(error);
       console.error(error);
@@ -44,13 +44,13 @@ const SignUpModal = ({ onDismiss, onSignUpSuccessful }: SignUpModalProps) => {
           <form
             id="signupForm"
             className={styles["add-note-form"]}
-            onSubmit={handleSubmit(onSubmit)}
+            onSubmit={handleSubmit(onSubmit)} // Call the onSubmit function when the form is submitted
           >
             <label htmlFor="username">Username</label>
             <input
               type="text"
               placeholder="Username"
-              {...register("username", { required: "Required" })}
+              {...register("username", { required: "Required" })} // Register the "username" input field with react-hook-form and provide validation rules
             />
             <label htmlFor="email">Email</label>
             <input
@@ -71,7 +71,7 @@ const SignUpModal = ({ onDismiss, onSignUpSuccessful }: SignUpModalProps) => {
             type="submit"
             form="signupForm"
             className={styles["signup-button"]}
-            disabled={isSubmitting}
+            disabled={isSubmitting} // Disable the button if the form is being submitted
           >
             Sign Up
           </button>

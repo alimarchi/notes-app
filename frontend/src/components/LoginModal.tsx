@@ -1,4 +1,4 @@
-import styles from "../styles/AddNoteDialog.module.css";
+import styles from "../styles/modals.module.css";
 import { User } from "../models/user";
 import { useForm } from "react-hook-form";
 import { LoginCredentials } from "../network/notes_api";
