@@ -19,6 +19,10 @@
   margin-right: auto;
 }
 
+.add-button:hover {
+  background-color: var(--dark-blue);
+}
+
 .warn-message {
   display: block;
   margin-left: auto;

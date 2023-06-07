@@ -47,7 +47,7 @@ const AddEditNoteDialog = ({
     <div className={styles.modal}>
       <div className={styles["modal-dialog"]}>
         <div className={styles["modal-header"]}>
-          <h2>{noteToEdit? "Edit Note" : "Add Note"}</h2>
+          <h2>{noteToEdit ? "Edit Note" : "Add Note"}</h2>
           <FontAwesomeIcon
             icon={faXmark}
             onClick={onDismiss}
@@ -65,10 +65,20 @@ const AddEditNoteDialog = ({
             <input
               type="text"
               placeholder="Title"
+              className={`${
+                errors.title ? styles["input-alert"] : styles["input-border"]
+              }`}
               {...register("title", { required: "Required" })}
             />
+            {errors.title && (
+              <p className={styles["error-message"]}>{errors.title.message}</p>
+            )}
             <label>Text</label>
-            <textarea placeholder="Text" {...register("text")}></textarea>
+            <textarea
+              placeholder="Text"
+              {...register("text")}
+              className={styles["input-border"]}
+            ></textarea>
           </form>
         </div>
         <div className={styles["modal-footer"]}>

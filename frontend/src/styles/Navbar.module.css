@@ -31,6 +31,12 @@
   cursor: pointer;
 }
 
+.login-signup-button:hover,
+.logout-button:hover {
+  background-color: black;
+  color: #fafafa;
+}
+
 .login-signup-button:first-of-type {
   margin-right: 1em;
 }

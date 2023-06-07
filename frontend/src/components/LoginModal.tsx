@@ -63,6 +63,9 @@ const LoginModal = ({ onDismiss, onLoginSuccessful }: LoginModalProps) => {
             <input
               type="text"
               placeholder="Username"
+              className={`${
+                errors.username ? styles["input-alert"] : styles["input-border"]
+              }`}
               {...register("username", {
                 required: "Username is required",
                 validate: (value) =>
@@ -78,6 +81,9 @@ const LoginModal = ({ onDismiss, onLoginSuccessful }: LoginModalProps) => {
             <input
               type="password"
               placeholder="Password"
+              className={`${
+                errors.password ? styles["input-alert"] : styles["input-border"]
+              }`}
               {...register("password", {
                 required: "Password is required",
               })}

@@ -6,8 +6,8 @@ import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 
 interface NoteProps {
   note: NoteModel;
-  onNoteClicked: (note: NoteModel) => void,
-  onDeleteNoteClicked: (note: NoteModel) => void,
+  onNoteClicked: (note: NoteModel) => void;
+  onDeleteNoteClicked: (note: NoteModel) => void;
 }
 
 const Note = ({ note, onNoteClicked, onDeleteNoteClicked }: NoteProps) => {
@@ -23,7 +23,10 @@ const Note = ({ note, onNoteClicked, onDeleteNoteClicked }: NoteProps) => {
   }
 
   return (
-    <div className={styles["note-card"]} onClick={() => onNoteClicked(note)}>
+    <div
+      className={`${styles["note-card"]} ${styles["hvr-curl-bottom-right"]}`}
+      onClick={() => onNoteClicked(note)}
+    >
       <div className={styles["note-body"]}>
         <div className={styles["note-header"]}>
           <h2>{title}</h2>{" "}

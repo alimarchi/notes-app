@@ -3,7 +3,9 @@
   font-size: 0.875rem;
   --yellow: #fcffb2;
   --blue: #30A2FF;
+  --dark-blue: #2b8bda;
   --grey: #9BABB8;
+  --alert: rgb(168, 35, 35);
 }
 
 *,
