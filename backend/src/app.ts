@@ -16,6 +16,7 @@ const app = express();
 app.use(cors());
 
 // morgan library, HTTP request logger middleware for node.js
+// It helps in logging the details of incoming HTTP requests, such as the HTTP method, URL, response status, and response time. It provides useful information for debugging and monitoring the application during development.
 app.use(morgan("dev"));
 
 app.use(express.json());
