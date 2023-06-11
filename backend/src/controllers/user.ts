@@ -22,6 +22,7 @@ interface SignUpBody {
   password?: string;
 }
 
+// RequestHandler is a generic type that represents the type of a request handler function in express.js It takes 4 parametres: type of request body, type of response body, type of expected request body and the type of the next middleware function
 export const signUp: RequestHandler<
   unknown,
   unknown,
